@@ -1,15 +1,18 @@
 package com.gosemathraj.foodzilla.data.local.db
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.gosemathraj.foodzilla.data.local.entity.FoodEntity
 import com.gosemathraj.foodzilla.data.remote.models.Food
 
+@Dao
 interface FoodzillaDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(foodList : List<Food>)
+    suspend fun insertAll(foodList : List<FoodEntity>)
 
-    @Query("SELECT * FROM food")
-    suspend fun getAll(): List<Food>
+    @Query("SELECT * FROM foodentity")
+    suspend fun getAll(): List<FoodEntity>
 }

@@ -29,18 +29,8 @@ object NetworkModule {
             val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             }
-            val headerInterceptor = object : Interceptor {
-                override fun intercept(chain: Interceptor.Chain): Response {
-                    val request = chain.request().newBuilder()
-                        .addHeader("Content-Type","application/json")
-                        .build()
-                    return chain.proceed(request)
-                }
-            }
-
             return OkHttpClient().newBuilder()
                 .addInterceptor(httpLoggingInterceptor)
-                .addInterceptor(headerInterceptor)
                 .build()
         } else {
             return OkHttpClient().newBuilder().build()
