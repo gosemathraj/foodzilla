@@ -27,8 +27,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     private fun initCounter() {
         object : CountDownTimer(3000, 1000) {
             override fun onFinish() {
-//                finish()
-//                startActivity(HomeActivity::class.java)
+                finish()
+                startActivity(HomeActivity::class.java)
             }
 
             override fun onTick(millisUntilFinished: Long) {}

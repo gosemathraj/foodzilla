@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.gosemathraj.foodzilla.data.local.entity.FoodEntity
-import com.gosemathraj.foodzilla.data.remote.models.Food
 
 @Dao
 interface FoodzillaDao {

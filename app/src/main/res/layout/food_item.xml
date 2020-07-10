@@ -5,7 +5,7 @@
     <data>
         <variable
             name="food"
-            type="com.gosemathraj.foodzilla.data.remote.models.Food" />
+            type="com.gosemathraj.foodzilla.data.models.Food" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -13,20 +13,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="4dp"
-        app:cardUseCompatPadding="true">
+        app:cardUseCompatPadding="true"
+        android:layout_marginBottom="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="16dp">
 
             <!--Title-->
             <com.gosemathraj.foodzilla.ui.custom.CustomTextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@{food.title}"
-                android:textColor="@color/black_20"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Mango Milkshake"/>
@@ -36,9 +39,11 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_food"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 android:src="@drawable/ic_launcher_background"
                 app:setImageUrl="@{food.image}"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title" />

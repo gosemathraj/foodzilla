@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import com.gosemathraj.foodzilla.R
 import com.gosemathraj.foodzilla.utils.safeExecute
 
@@ -131,9 +132,8 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     /**
      *  Show Snackbar
      */
-    // TODO : Add snackbar
     fun showSnack(snackMessage : String) {
-        showToast(snackMessage)
+        Snackbar.make(findViewById(android.R.id.content), snackMessage, Snackbar.LENGTH_SHORT).show()
     }
 
     /**

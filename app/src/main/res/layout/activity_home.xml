@@ -45,20 +45,25 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:layout_marginLeft="4dp"
+            android:layout_marginLeft="8dp"
             android:gravity="center_vertical"
             app:layout_constraintTop_toTopOf="@id/guideline_top"
             app:layout_constraintStart_toStartOf="@id/guideline_start" />
         <!--App name-->
 
         <!--Search-->
-        <androidx.appcompat.widget.AppCompatEditText
+        <com.gosemathraj.foodzilla.ui.custom.CustomEditText
             android:id="@+id/edt_search"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:hint="search..."
+            android:hint="search by name..."
             android:paddingLeft="28dp"
             android:layout_marginTop="8dp"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:cursorVisible="false"
             android:background="@drawable/bg_search"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
@@ -71,6 +76,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scrollbars="none"
+            android:layout_marginTop="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
