@@ -3,15 +3,17 @@ package com.gosemathraj.foodzilla.ui.home
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.gosemathraj.foodzilla.R
 import com.gosemathraj.foodzilla.data.models.Food
+import com.gosemathraj.foodzilla.data.remote.api.config.Error
+import com.gosemathraj.foodzilla.data.remote.api.config.Resource
 import com.gosemathraj.foodzilla.databinding.ActivityHomeBinding
 import com.gosemathraj.foodzilla.ui.base.BaseActivity
 import com.gosemathraj.foodzilla.ui.home.adapter.FoodListAdapter
-import com.reconnect.reconnectapp.data.remote.api.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -50,6 +52,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                tv_error.visibility = View.GONE
                 filteredFoodList.clear()
                 if (s.toString().isNotEmpty()) {
                     filteredFoodList.addAll(foodList.filter {
@@ -60,6 +63,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
                 }
                 foodAdapter.refreshList(filteredFoodList)
                 foodAdapter.notifyDataSetChanged()
+
+                if (filteredFoodList.isNullOrEmpty()) {
+                    tv_error.visibility = View.VISIBLE
+                    tv_error.text = "No Data Found"
+                }
             }
         })
     }
@@ -83,16 +91,24 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
                 }
                 Resource.Status.SUCCESS -> {
                     finishLoader()
-                    it.data?.let { foodList ->
-                        this.foodList = foodList as ArrayList<Food>
+                    if (!it.data.isNullOrEmpty()) {
+                        this.foodList = it.data as ArrayList<Food>
                         foodAdapter.refreshList(foodList)
                         foodAdapter.notifyDataSetChanged()
+                    } else {
+                        tv_error.visibility = View.VISIBLE
+                        tv_error.text = "No Data Found"
                     }
                 }
                 Resource.Status.ERROR -> {
                     finishLoader()
                     it.error?.let { error ->
-                        error.message?.let { message -> showToast(message) }
+                        if (error.errorType == Error.ErrorType.NO_INTERNET_ERROR) {
+                            tv_error.visibility = View.VISIBLE
+                            tv_error.text = "No Internet Connection"
+                        } else {
+                            it.error.errorMessage?.let { errorMsg -> showToast(errorMsg) }
+                        }
                     }
                 }
             }

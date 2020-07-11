@@ -5,8 +5,11 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
+import com.gosemathraj.foodzilla.data.remote.api.config.Error
+import com.gosemathraj.foodzilla.data.remote.api.config.Error.ErrorType
+import retrofit2.HttpException
 
-abstract class BaseViewModel() : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
     fun launchOnViewModelScope(block: suspend () -> Unit) {
         viewModelScope.launch {
@@ -21,21 +24,23 @@ abstract class BaseViewModel() : ViewModel() {
     }
 
     suspend fun <X> apiCall(call: ApiCall<X>.() -> Unit) {
-        val apiCallFunction = ApiCall<X>()
+    val apiCallFunction = ApiCall<X>()
         try {
             call(apiCallFunction)
             val response = apiCallFunction.onEnqueue()
             if(response != null) {
                 apiCallFunction.onSuccess(response)
             } else {
-                apiCallFunction.onError(Error("Something Went Wrong"))
+                apiCallFunction.onError(Error(ErrorType.GENERAL_ERROR, "Something Went Wrong"))
             }
         } catch (ex : Exception) {
             Timber.d(ex)
             when(ex) {
-                is IOException -> { apiCallFunction.onError(Error("Network Error")) }
-                else -> { apiCallFunction.onError(Error("Something Went Wrong")) }
+                is IOException -> { apiCallFunction.onError(Error(ErrorType.NETWORK_ERROR, "Network Error")) }
+                is HttpException -> { apiCallFunction.onError(Error(ErrorType.GENERAL_ERROR,"Something Went Wrong")) }
+                else -> { apiCallFunction.onError(Error(ErrorType.GENERAL_ERROR,"Something Went Wrong")) }
             }
         }
     }
 }
+

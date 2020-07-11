@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -83,6 +84,21 @@
             app:layout_constraintTop_toBottomOf="@id/edt_search"
             app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"/>
         <!--Recyclerview-->
+
+        <!--ErrorScreen-->
+        <com.gosemathraj.foodzilla.ui.custom.CustomTextView
+            android:id="@+id/tv_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintTop_toBottomOf="@id/edt_search"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+            android:visibility="gone"
+            tools:text="Error"/>
+        <!--ErrorScreen-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

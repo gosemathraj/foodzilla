@@ -1,4 +1,4 @@
-package com.reconnect.reconnectapp.data.remote.api
+package com.gosemathraj.foodzilla.data.remote.api.config
 
 data class Resource<out T>(val status: Status, val data: T? = null, val message: String? = null, val error: Error? = null) {
     companion object {
